@@ -1,12 +1,18 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
+  const handleRegister = () => {
+    navigation.navigate('Signup');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topImageContainer}>
@@ -39,9 +45,12 @@ const LoginScreen = () => {
           <AntDesign style={styles.inputIcon} name="arrowright" size={20} color={'white'} />
         </LinearGradient>
       </View>
-      <Text style={styles.footerText}>
-        Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Create</Text>
-      </Text>
+
+      <TouchableOpacity onPress={handleRegister}>
+        <Text style={styles.footerText}>
+          Don't have an account? <Text style={{ textDecorationLine: 'underline' }}>Create</Text>
+        </Text>
+      </TouchableOpacity>
 
       <View style={styles.leftVectorContainer}>
         <ImageBackground source={require('../assets/leftVector.png')} style={styles.leftVectorImage} />
