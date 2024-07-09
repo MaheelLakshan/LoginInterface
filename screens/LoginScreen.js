@@ -1,5 +1,8 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import { TextInput } from 'react-native';
 
 const LoginScreen = () => {
   return (
@@ -13,6 +16,16 @@ const LoginScreen = () => {
       <View>
         <Text style={styles.signInText}>Sign in to your account</Text>
       </View>
+      <View style={styles.inputContainer}>
+        <FontAwesome style={styles.inputIcon} name="user" size={20} color={'#9A9A9A'} />
+        <TextInput style={styles.textInput} placeholder="Email" />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Fontisto style={styles.inputIcon} name="locked" size={20} color={'#9A9A9A'} />
+        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry />
+      </View>
+      <Text style={styles.forgotPassword}>Forgot your password</Text>
     </View>
   );
 };
@@ -40,5 +53,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     color: '#262626',
+    marginBottom: 30,
+  },
+  inputContainer: {
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    borderRadius: 20,
+    marginHorizontal: 40,
+    elevation: 10,
+    marginVertical: 20,
+    alignItems: 'center',
+    height: 50,
+  },
+  textInput: {
+    flex: 1,
+    marginHorizontal: 12,
+  },
+  inputIcon: {
+    marginLeft: 15,
+  },
+
+  forgotPassword: {
+    color: '#BEBEBE',
+    textAlign: 'right',
+    width: '90%',
+    fontSize: 15,
   },
 });
