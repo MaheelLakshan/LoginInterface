@@ -1,5 +1,6 @@
-import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import { ActivityIndicator, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -7,11 +8,35 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../FirebaseConfig';
 
 const SignupScreen = () => {
   const navigation = useNavigation();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [phonenumber, setPhonenumber] = useState('');
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
   const handleRegister = () => {
     navigation.navigate('Login');
+  };
+
+  const signUp = async () => {
+    setLoading(true);
+    try {
+      const response = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(response);
+      alert('Check your emails');
+    } catch (error) {
+      console.log(error);
+      alert('Register failed: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,31 +51,37 @@ const SignupScreen = () => {
         </Text>
       </View>
 
-      <View style={styles.inputContainer}>
-        <FontAwesome style={styles.inputIcon} name="user" size={20} color={'#9A9A9A'} />
-        <TextInput style={styles.textInput} placeholder="Username" />
-      </View>
+      <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={90}>
+        <View style={styles.inputContainer}>
+          <FontAwesome style={styles.inputIcon} name="user" size={20} color={'#9A9A9A'} />
+          <TextInput value={username} onChangeText={(text) => setUsername(text)} style={styles.textInput} placeholder="Username" />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Fontisto style={styles.inputIcon} name="locked" size={20} color={'#9A9A9A'} />
-        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry />
-      </View>
+        <View style={styles.inputContainer}>
+          <Fontisto style={styles.inputIcon} name="locked" size={20} color={'#9A9A9A'} />
+          <TextInput value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} placeholder="Password" secureTextEntry />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <AntDesign style={styles.inputIcon} name="mail" size={20} color={'#9A9A9A'} />
-        <TextInput style={styles.textInput} placeholder="E-mail" />
-      </View>
-      <View style={styles.inputContainer}>
-        <Entypo style={styles.inputIcon} name="mobile" size={20} color={'#9A9A9A'} />
-        <TextInput style={styles.textInput} placeholder="phonenumber" />
-      </View>
+        <View style={styles.inputContainer}>
+          <AntDesign style={styles.inputIcon} name="mail" size={20} color={'#9A9A9A'} />
+          <TextInput value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} placeholder="E-mail" />
+        </View>
+        <View style={styles.inputContainer}>
+          <Entypo style={styles.inputIcon} name="mobile" size={20} color={'#9A9A9A'} />
+          <TextInput value={phonenumber} onChangeText={(text) => setPhonenumber(text)} style={styles.textInput} placeholder="phonenumber" />
+        </View>
 
-      <View style={styles.signInButtonContainer}>
-        <Text style={styles.signIn}>Sign In</Text>
-        <LinearGradient colors={['#F97794', '#623AA2']} style={styles.linearGradient}>
-          <AntDesign style={styles.inputIcon} name="arrowright" size={20} color={'white'} />
-        </LinearGradient>
-      </View>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <TouchableOpacity onPress={signUp} style={styles.signUpButtonContainer}>
+            <Text style={styles.signUp}>Sign Up</Text>
+            <LinearGradient colors={['#F97794', '#623AA2']} style={styles.linearGradient}>
+              <AntDesign style={styles.inputIcon} name="arrowright" size={20} color={'white'} />
+            </LinearGradient>
+          </TouchableOpacity>
+        )}
+      </KeyboardAwareScrollView>
 
       <View style={styles.footerContainer}>
         <View style={styles.socialMediaContainer}>
@@ -122,13 +153,13 @@ const styles = StyleSheet.create({
     width: '90%',
     fontSize: 15,
   },
-  signInButtonContainer: {
+  signUpButtonContainer: {
     flexDirection: 'row',
     marginTop: 40,
     width: '90%',
     justifyContent: 'flex-end',
   },
-  signIn: {
+  signUp: {
     color: '#262626',
     fontSize: 25,
     fontWeight: 'bold',

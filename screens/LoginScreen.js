@@ -1,16 +1,36 @@
-import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import { ActivityIndicator, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { FIREBASE_AUTH } from '../FirebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
   const handleRegister = () => {
     navigation.navigate('Signup');
+  };
+
+  const signIn = async () => {
+    setLoading(true);
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,21 +50,25 @@ const LoginScreen = () => {
       </View>
       <View style={styles.inputContainer}>
         <FontAwesome style={styles.inputIcon} name="user" size={20} color={'#9A9A9A'} />
-        <TextInput style={styles.textInput} placeholder="Email" />
+        <TextInput value={email} style={styles.textInput} placeholder="Email" onChangeText={(text) => setEmail(text)} />
       </View>
 
       <View style={styles.inputContainer}>
         <Fontisto style={styles.inputIcon} name="locked" size={20} color={'#9A9A9A'} />
-        <TextInput style={styles.textInput} placeholder="Password" secureTextEntry />
+        <TextInput value={password} style={styles.textInput} placeholder="Password" secureTextEntry onChangeText={(text) => setPassword(text)} />
       </View>
       <Text style={styles.forgotPassword}>Forgot your password</Text>
 
-      <View style={styles.signInButtonContainer}>
-        <Text style={styles.signIn}>Sign In</Text>
-        <LinearGradient colors={['#F97794', '#623AA2']} style={styles.linearGradient}>
-          <AntDesign style={styles.inputIcon} name="arrowright" size={20} color={'white'} />
-        </LinearGradient>
-      </View>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <TouchableOpacity onPress={signIn} style={styles.signInButtonContainer}>
+          <Text style={styles.signIn}>Sign In</Text>
+          <LinearGradient colors={['#F97794', '#623AA2']} style={styles.linearGradient}>
+            <AntDesign style={styles.inputIcon} name="arrowright" size={20} color={'white'} />
+          </LinearGradient>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity onPress={handleRegister}>
         <Text style={styles.footerText}>
