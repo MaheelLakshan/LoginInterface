@@ -1,4 +1,5 @@
 This is an interface for login and sign up that was developed with react native and backend authentication with fireabse JS SDK.
+So in fireabse authentication, I just used the email and password for both signup and signin.
 
 ## Screenshots
 <table>
