@@ -134,9 +134,9 @@ const styles = StyleSheet.create({
   },
   signInButtonContainer: {
     flexDirection: 'row',
-    marginTop: 100,
+    marginTop: 50,
     width: '90%',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   signIn: {
     color: '#262626',
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     color: '#262626',
     textAlign: 'center',
     fontSize: 18,
-    marginTop: 20,
+    marginTop: 80,
   },
   leftVectorContainer: {
     position: 'absolute',
