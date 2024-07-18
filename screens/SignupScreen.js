@@ -29,7 +29,7 @@ const SignupScreen = () => {
     setLoading(true);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(response);
+      // console.log(response);
       alert('Check your emails');
     } catch (error) {
       console.log(error);
