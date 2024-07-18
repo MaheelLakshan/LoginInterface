@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
   },
   signUpButtonContainer: {
     flexDirection: 'row',
-    marginTop: 40,
+    marginTop: 50,
     width: '90%',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   signUp: {
     color: '#262626',
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
-  footerContainer: { marginTop: 25 },
+  footerContainer: { marginTop: 25, marginBottom: 50 },
   socialMediaContainer: {
     display: 'flex',
     flexDirection: 'row',
