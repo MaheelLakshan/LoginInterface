@@ -4,10 +4,11 @@ This is an interface for login and sign up that was developed with react native 
 <table>
    <tr>
     <td>
-![Screenshot_1721328107](https://github.com/user-attachments/assets/5a4fa5a5-d08e-47e2-88d4-178408657342)
+    <td>
+       <img src="https://github.com/user-attachments/assets/5a4fa5a5-d08e-47e2-88d4-178408657342" alt="Screenshot 1" width="200"/>
          </td>
     <td>
-![Screenshot_1721328204](https://github.com/user-attachments/assets/a2f1cee0-7b5e-491e-8943-d4a8a48c44c2)
+ <img src="https://github.com/user-attachments/assets/a2f1cee0-7b5e-491e-8943-d4a8a48c44c2" alt="Screenshot 2" width="200"/>
        </td>
   </tr>
 </table>
